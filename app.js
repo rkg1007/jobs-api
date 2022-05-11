@@ -7,6 +7,7 @@ import authRouter from "./routes/auth.js";
 import jobsRouter from "./routes/jobs.js";
 import notFound from "./middlewares/not-found.js";
 import errorHandler from "./middlewares/error-handler.js";
+import connectDb from "./utils/connect-db.js";
 
 
 const app = express();
@@ -24,8 +25,14 @@ app.use("/jobs", jobsRouter);
 app.use(notFound);
 app.use(errorHandler);
 
-const start = (port, url) => {
-  app.listen(port, console.log(`server is up and running at port ${port}...`));
+const start = async (port, url) => {
+  try {
+    await connectDb(url);
+    app.listen(port, console.log(`server is up and running at port ${port}...`));
+  } catch (error) {
+    console.log("error while connecting to the database");
+    console.log(error.message);
+  }
 };
 
 start(PORT, MONGO_URI);
