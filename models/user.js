@@ -36,6 +36,11 @@ UserSchema.methods.generateJwtToken = function () {
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_LIFETIME }
   );
-}
+};
+
+UserSchema.methods.comparePassword = async function (password) {
+  const passwordHash = await bcrypt.hash(password, 10);
+  return this.password === passwordHash;
+};
 
 export default mongoose.model("User", UserSchema);
