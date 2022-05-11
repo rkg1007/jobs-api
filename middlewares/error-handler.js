@@ -3,7 +3,7 @@ import CustomError from "../errors/custom-error.js";
 
 const errorHandler = (err, req, res, next) => {
   let statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
-  let msg = "internal server error";
+  let msg = err.message;
 
   if (err instanceof CustomError) {
     statusCode = err.statusCode;

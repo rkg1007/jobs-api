@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const UserSchema = mongoose.Schema({
   name: {
@@ -23,5 +24,9 @@ const UserSchema = mongoose.Schema({
     maxlength: 12,
   },
 });
+
+UserSchema.pre("save", async function () {
+  this.password = await bcrypt.hash(this.password, 10);
+})
 
 export default mongoose.model("User", UserSchema);
