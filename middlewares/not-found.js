@@ -1,4 +1,4 @@
-import { NotFound } from "../errors";
+import NotFound from "../errors/not-found.js";
 
 const notFound = (req, res) => {
   throw new NotFound("Page not Found");
