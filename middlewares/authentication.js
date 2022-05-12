@@ -11,6 +11,8 @@ const authenticate = (req, res, next) => {
   try {
     const token = authHeader.split(' ')[1];
     const payload = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = payload.sub;
+    next();
   } catch (error) {
     throw new Unauthenticated("invalid token");
   }
