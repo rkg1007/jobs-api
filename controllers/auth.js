@@ -16,14 +16,14 @@ const register = async (req, res) => {
   });
 };
 
-const login = (req, res) => {
+const login = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
     throw new BadRequest("please provide email and password");
   }
 
-  const user = User.findOne({ email });
+  const user =  await User.findOne({ email });
   if (!user) {
     throw new NotFound("user is not registered");
   }
